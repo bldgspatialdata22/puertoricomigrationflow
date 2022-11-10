@@ -1,35 +1,45 @@
 ---
-title: "puertoricomigrationflow"
+title: "Puerto Rico Migration Flows: Project Proposal"
 author: "Wendy Prudencio"
 ---
 
-## Narrative
+# Overview
 
 Puerto Rico is a territorial island belonging to the United States and is home to an estimated 3.2 million people (Census, n.d). The archipelago is located in the Caribbean Sea and is susceptible to hurricanes, landslides, mudslides, earthquakes, and other natural hazards. In the last decade, Puerto Rico has experienced three major hurricanes, Irma, and Maria in 2017 and Fiona in 2022. Hurricanes Irma and Maria, category 4 and 5, respectively, destroyed critical infrastructure, hospitals, and damaged thousands of homes displacing thousands of Puerto Ricans.
 
-After natural disasters, it is difficult to track individual movements from one location to another and even harder if the individuals move to a different state or country. For instance, Puerto Ricans have the ability to move from Puerto Rico to the continental U.S. because they are U.S. citizens and are not bound by international restrictions. Puerto Ricans have a unique status that makes it an interesting group to research due to their history, location, and disaster risk. The primary goal of this project is research, compare, analyze, and document migration flows from Puerto Rico to the continental U.S. pre-and-post hurricanes Irma and Maria and possibly Fiona, if data is available.
+After natural disasters, it is difficult to track individual movements from one location to another and even harder if the individuals move to a different state or country. For instance, Puerto Ricans have the ability to move from Puerto Rico to the continental U.S. because they are U.S. citizens and are not bound by international restrictions. Puerto Ricans have a unique status that makes it an interesting group to research due to their history, location, and disaster risk.
 
-The data to support the goal of this project that I currently have includes data from the American Community Survey on population estimates from 2015-2019. I have data from the National Flood Insurance Program (NFIP) that received flood claims after the hurricanes in 2017. Additionally, I have found Puerto Rico on OpenStreetMaps and a layer in ArcGIS that points to hospitals that were damaged during the hurricanes. Lastly, I can use Mapbox to obtain information such as hospital distance for a property x miles away. I will probably have to combine some of the data because the data is in different formats. My approach is to explore the data and determine how to best analyze the data using what I have found thus far and be able to combine methodology to produce a visual.
+The primary goal of this project is research, compare, analyze, and document migration flows from Puerto Rico to the continental U.S. pre-and-post hurricanes Irma and Maria and possibly Fiona, if data is available.
 
-*Questions*
+# Data and approach
+
+The data to support the goal of this project that I currently have includes data from the American Community Survey on population estimates from 2015-2019. I have data from the National Flood Insurance Program (NFIP) that received flood claims after the hurricanes in 2017. Additionally, I have found Puerto Rico on OpenStreetMap and a layer in ArcGIS that points to hospitals that were damaged during the hurricanes. Lastly, I can use Mapbox to obtain information such as hospital distance for a property x miles away.
+
+I will probably have to combine some of the data because the data is in different formats. My approach is to explore the data and determine how to best analyze the data using what I have found thus far and be able to combine methodology to produce a visual.
+
+## Questions
 
 The questions I intend to answer are:
 
-1\. Which year had the most migration from Puerto Rico to the continental U.S.?
+1.  Which year had the most migration from Puerto Rico to the continental U.S.?
+2.  What continental U.S. state received the most influx of Puerto Rican individuals?
+3.  Can I use flooding claims information to inform migration flow?
 
-2\. What continental U.S. state received the most influx of Puerto Rican individuals?
+## Description of data
 
-3\. Can I use flooding claims information to inform migration flow?
+1.  The first dataset is from the American Community Survey with estimated population data for municipalities and census tracts. The ACS data is from 2015-2019, but I also have the census tracts from 2010-2018. I could use one or the other dataset to compare the number of individuals living on the island pre-and-post Hurricanes Irma and Maria. The ACS data is obtained through the U.S. Census Bureau to obtain population data and housing information and has a structure on the variables (Census, n.d.).
 
-*Descriptive*
+2.  The NFIP claims data was obtained from the Federal Emergency Management Agency website that has been collected through OpenFEMA that provides datasets to the public (FEMA, 2022). The purpose of the NFIP claims is to determine who had flooding insurance, reimbursement for damages, census tract, and elevation (FEMA, 2022). NFIP claims data does not have a standard or schema, but is organized by state. I have to clean data that is only relevant to Puerto Rico for 2017-2018.
 
-The first dataset is from the American Community Survey with estimated population data for municipalities and census tracts. The ACS data is from 2015-2019, but I also have the census tracts from 2010-2018. I could use one or the other dataset to compare the number of individuals living on the island pre-and-post Hurricanes Irma and Maria. The ACS data is obtained through the U.S. Census Bureau to obtain population data and housing information and has a structure on the variables (Census, n.d.). The NFIP claims data was obtained from the Federal Emergency Management Agency website that has been collected through OpenFEMA that provides datasets to the public (FEMA, 2022). The purpose of the NFIP claims is to determine who had flooding insurance, reimbursement for damages, census tract, and elevation (FEMA, 2022). NFIP claims data does not have a standard or schema, but is organized by state. I have to clean data that is only relevant to Puerto Rico for 2017-2018. The last dataset was obtained from ArcGIS that includes data of 43 hospitals that were impacted by the hurricanes in 2017. The dataset has hospital names, addresses, coordinates, countyFIP codes, public or private, and population. The purpose of the data was to support disaster recovery and only provide basic information. I do not think there are any ethical issues around the collection of any of the 3 datasets and I do not anticipate any ethical issues from the work I plan on doing with the data. Each dataset contains different types of data for 3 different purposes, but I think that combining the data from each set will support the research questions.
+3.  The last dataset was obtained from ArcGIS that includes data of 43 hospitals that were impacted by the hurricanes in 2017. The dataset has hospital names, addresses, coordinates, county FIPS codes, whether the hospital is public or private, and population. The purpose of the data was to support disaster recovery and only provide basic information.
 
-*Preliminary Analysis*
+I do not think there are any ethical issues around the collection of any of the 3 datasets and I do not anticipate any ethical issues from the work I plan on doing with the data. Each dataset contains different types of data for 3 different purposes, but I think that combining the data from each set will support the research questions.
 
-I started my exploratory analysis by using the library packages tidycensus, tidyverse, and tigris in RStudio to use ACS data to explore some population estimates and characteristics such as age and gender. Using the walkerke/tidycensus vignette from Github, I was able to start the exploratory migration flows in Puerto Rico using get_flows() function that provides movedin, movedout, and movednet variables with a margin of error for each column. The get_flows() function only uses the geography as county, county subdivision, or metropolitan statistical area, unfortunately it does not use state. Puerto Rico has 78 municipalities/ counties; therefore, I will start comparing the municipalities in 2015.
+## Preliminary Analysis
 
-*References*
+I started my exploratory analysis by using the R packages tidycensus, tidyverse, and tigris in RStudio to use ACS data to explore some population estimates and characteristics such as age and gender. Using the walkerke/tidycensus vignette from Github, I was able to start the exploratory migration flows in Puerto Rico using `get_flows()` function that provides movedin, movedout, and movednet variables with a margin of error for each column. The `get_flows()` function only uses the geography as county, county subdivision, or metropolitan statistical area, unfortunately it does not use state. Puerto Rico has 78 municipalities/ counties; therefore, I will start comparing the municipalities in 2015.
+
+# References
 
 American Community Survey. (n.d.). American Community Survey Tables: 2015--2019 (5-Year Estimates). Retrieved from https://www.socialexplorer.com/data/ACS2019_5yr/metadata/?ds=ACS19_5yr Federal
 
@@ -37,89 +47,72 @@ Emergency Management Agency. (2022). OpenFEMA Data Sets. Retrieved from https://
 
 U.S. Census Bureau. (n.d.). Quickfacts Puerto Rico. Retrieved from https://www.census.gov/quickfacts/PR
 
-*Links*
+# Links
 
-#ACS data is provided by: (https://www.socialexplorer.com/data/ACS2019_5yr/metadata/?ds=ACS19_5yr) #NFIP data is provided by: (https://www.fema.gov/about/openfema/data-sets#nfip)
+ACS data is provided by: (https://www.socialexplorer.com/data/ACS2019_5yr/metadata/?ds=ACS19_5yr)
 
-#OpenStreetMap: (https://www.openstreetmap.org/export#map=10/18.1700/-66.5099)
+NFIP data is provided by: (https://www.fema.gov/about/openfema/data-sets#nfip)
 
-#ArcGIS map: (https://www.arcgis.com/home/item.html?id=2e060b7232da44e2adf112795f1495b9)
+OpenStreetMap: (https://www.openstreetmap.org/export#map=10/18.1700/-66.5099)
 
-```{r}
-library(usethis)
-```
+ArcGIS map: (https://www.arcgis.com/home/item.html?id=2e060b7232da44e2adf112795f1495b9)
 
-```{r}
-usethis::use_git_remote("origin", url = NULL, overwrite = TRUE)
-git_sitrep()
-```
-
-```{r}
-use_git(message = "Create new project")
-```
-
-```{r}
-use_github(organisation = "bldgspatialdata22")
-```
-
-
-```{r}
-use_readme_rmd()
-
-use_cc0_license()
-```
-
-##Set-up packages
-
-```{r}
+```{r setup}
+#| echo: false
 library(tidycensus)
 library(tidyverse)
 library(tigris)
 library(sf)
+library(readxl)
+
 options(tigris_use_cache = TRUE)
-
-options(tigris_class = "sf")
-options(tigris_use_cache = TRUE)
-census_api_key("3efcfb0ddc4c895edaac8221c73a40ca59dd392c") 
-"install = TRUE"
 ```
 
-##Census data on all population
+## ACS estimates for sex, age, and latino/a/x orgin in Puerto Rico
 
 ```{r}
-state_pop <- get_estimates(geography = "state", product = "population")
-
-state_pop
-```
-
-```{r}
-unique(state_pop$variable)
-```
-
-##ASC estimates for sex, age, and latino/a/x orgin in Puerto Rico
-
-```{r}
-pr_age_hisp <- get_estimates(geography = "state", 
-                             product = "characteristics", 
-                             breakdown = c("SEX", "AGEGROUP", "HISP"),  
-                             breakdown_labels = TRUE, 
-                             state = "PR")
+pr_age_hisp <-
+  get_estimates(
+    geography = "state",
+    product = "characteristics",
+    breakdown = c("SEX", "AGEGROUP", "HISP"),
+    breakdown_labels = TRUE,
+    state = "PR"
+  )
 
 pr_age_hisp
 ```
 
-##Migration per county/ municpality for 2015 in alphabetical order
+## Migration per county/ municpality for 2015 in alphabetical order
+
+```{r counties}
+pr_counties <- tigris::counties(state = "PR", cb = TRUE)
+```
+
+```{r example_map_fn}
+pr_counties_flows_2015 <-
+  purrr::map_dfr(
+    pr_counties$COUNTYFP,
+    ~ get_flows(
+      geography = "county",
+      state = "PR",
+      county = .x,
+      year = 2015
+    )
+  )
+```
 
 ```{r}
-adjuntas15_flows <- get_flows(
-  geography = "county",
-  state = "PR",
-  county = "adjuntas",
-  year = 2015
+adjuntas15_flows <-
+  get_flows(
+    geography = "county",
+    state = "PR",
+    county = "Mayagüez",
+    year = 2015
   )
 
-adjuntas15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+adjuntas15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -129,10 +122,10 @@ aguada15_flows <- get_flows(
   state = "PR",
   county = "aguada",
   year = 2015
-  )
+)
 
-aguada15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+aguada15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -142,10 +135,10 @@ aguadilla15_flows <- get_flows(
   state = "PR",
   county = "aguadilla",
   year = 2015
-  )
+)
 
-aguadilla15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+aguadilla15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -155,10 +148,10 @@ aguasbue15_flows <- get_flows(
   state = "PR",
   county = "aguas buenas",
   year = 2015
-  )
+)
 
-aguasbue15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+aguasbue15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -168,10 +161,10 @@ aibonito15_flows <- get_flows(
   state = "PR",
   county = "aibonito",
   year = 2015
-  )
+)
 
-aibonito15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+aibonito15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -181,10 +174,10 @@ anasco15_flows <- get_flows(
   state = "PR",
   county = "anasco",
   year = 2015
-  )
+)
 
-anasco15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+anasco15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -194,10 +187,10 @@ arecibo15_flows <- get_flows(
   state = "PR",
   county = "arecibo",
   year = 2015
-  )
+)
 
-arecibo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+arecibo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -207,10 +200,10 @@ arroyo15_flows <- get_flows(
   state = "PR",
   county = "arroyo",
   year = 2015
-  )
+)
 
-arroyo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+arroyo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -220,10 +213,10 @@ barcelo15_flows <- get_flows(
   state = "PR",
   county = "barceloneta",
   year = 2015
-  )
+)
 
-barcelo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+barcelo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -233,10 +226,10 @@ barran15_flows <- get_flows(
   state = "PR",
   county = "barranquitas",
   year = 2015
-  )
+)
 
-barran15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+barran15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -246,10 +239,10 @@ bayamon15_flows <- get_flows(
   state = "PR",
   county = "bayamon",
   year = 2015
-  )
+)
 
-bayamon15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+bayamon15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -259,10 +252,10 @@ cabo15_flows <- get_flows(
   state = "PR",
   county = "cabo rojo",
   year = 2015
-  )
+)
 
-cabo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+cabo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -272,10 +265,10 @@ caguas15_flows <- get_flows(
   state = "PR",
   county = "caguas",
   year = 2015
-  )
+)
 
-caguas15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+caguas15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -285,10 +278,10 @@ camuy15_flows <- get_flows(
   state = "PR",
   county = "camuy",
   year = 2015
-  )
+)
 
-camuy15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+camuy15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -298,10 +291,10 @@ canov15_flows <- get_flows(
   state = "PR",
   county = "canovanas",
   year = 2015
-  )
+)
 
-canov15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+canov15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -311,10 +304,10 @@ carolina15_flows <- get_flows(
   state = "PR",
   county = "carolina",
   year = 2015
-  )
+)
 
-carolina15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+carolina15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -324,10 +317,10 @@ catano15_flows <- get_flows(
   state = "PR",
   county = "catano",
   year = 2015
-  )
+)
 
-catano15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+catano15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -337,10 +330,10 @@ cayey15_flows <- get_flows(
   state = "PR",
   county = "cayey",
   year = 2015
-  )
+)
 
-cayey15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+cayey15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -350,10 +343,10 @@ ceiba15_flows <- get_flows(
   state = "PR",
   county = "ceiba",
   year = 2015
-  )
+)
 
-ceiba15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+ceiba15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -363,10 +356,10 @@ ciales15_flows <- get_flows(
   state = "PR",
   county = "ciales",
   year = 2015
-  )
+)
 
-ciales15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+ciales15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -376,10 +369,10 @@ cidra15_flows <- get_flows(
   state = "PR",
   county = "cidra",
   year = 2015
-  )
+)
 
-cidra15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+cidra15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -389,10 +382,10 @@ coamo15_flows <- get_flows(
   state = "PR",
   county = "coamo",
   year = 2015
-  )
+)
 
-coamo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+coamo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -402,10 +395,10 @@ comerio15_flows <- get_flows(
   state = "PR",
   county = "comerio",
   year = 2015
-  )
+)
 
-comerio15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+comerio15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -415,10 +408,10 @@ corozal15_flows <- get_flows(
   state = "PR",
   county = "corozal",
   year = 2015
-  )
+)
 
-corozal15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+corozal15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -428,10 +421,10 @@ culebra15_flows <- get_flows(
   state = "PR",
   county = "culebra",
   year = 2015
-  )
+)
 
-culebra15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+culebra15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -441,10 +434,10 @@ dorado15_flows <- get_flows(
   state = "PR",
   county = "dorado",
   year = 2015
-  )
+)
 
-dorado15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+dorado15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -454,10 +447,10 @@ fajardo15_flows <- get_flows(
   state = "PR",
   county = "fajardo",
   year = 2015
-  )
+)
 
-fajardo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+fajardo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -467,10 +460,10 @@ florida15_flows <- get_flows(
   state = "PR",
   county = "florida",
   year = 2015
-  )
+)
 
-florida15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+florida15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -480,10 +473,10 @@ guanica15_flows <- get_flows(
   state = "PR",
   county = "guanica",
   year = 2015
-  )
+)
 
-guanica15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+guanica15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -493,10 +486,10 @@ guayama15_flows <- get_flows(
   state = "PR",
   county = "guayama",
   year = 2015
-  )
+)
 
-guayama15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+guayama15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -506,10 +499,10 @@ guayanil15_flows <- get_flows(
   state = "PR",
   county = "guayanilla",
   year = 2015
-  )
+)
 
-guayanil15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+guayanil15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -519,10 +512,10 @@ guaynabo15_flows <- get_flows(
   state = "PR",
   county = "guaynabo",
   year = 2015
-  )
+)
 
-guaynabo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+guaynabo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -532,10 +525,10 @@ gurabo15_flows <- get_flows(
   state = "PR",
   county = "gurabo",
   year = 2015
-  )
+)
 
-gurabo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+gurabo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -545,10 +538,10 @@ hatillo15_flows <- get_flows(
   state = "PR",
   county = "hatillo",
   year = 2015
-  )
+)
 
-hatillo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+hatillo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -558,10 +551,10 @@ hormi15_flows <- get_flows(
   state = "PR",
   county = "hormigueros",
   year = 2015
-  )
+)
 
-hormi15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+hormi15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -571,10 +564,10 @@ humacao15_flows <- get_flows(
   state = "PR",
   county = "humacao",
   year = 2015
-  )
+)
 
-humacao15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+humacao15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -584,10 +577,10 @@ isabela15_flows <- get_flows(
   state = "PR",
   county = "isabela",
   year = 2015
-  )
+)
 
-isabela15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+isabela15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -597,9 +590,9 @@ jayuya15_flows <- get_flows(
   state = "PR",
   county = "jayuya",
   year = 2015
-  )
-jayuya15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+)
+jayuya15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -609,10 +602,10 @@ juana15_flows <- get_flows(
   state = "PR",
   county = "juana diaz",
   year = 2015
-  )
+)
 
-juana15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+juana15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -622,10 +615,10 @@ juncos15_flows <- get_flows(
   state = "PR",
   county = "juncos",
   year = 2015
-  )
+)
 
-juncos15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+juncos15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -635,10 +628,10 @@ lajas15_flows <- get_flows(
   state = "PR",
   county = "lajas",
   year = 2015
-  )
+)
 
-lajas15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+lajas15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -648,10 +641,10 @@ lares15_flows <- get_flows(
   state = "PR",
   county = "lares",
   year = 2015
-  )
+)
 
-lares15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+lares15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -661,10 +654,10 @@ lasmaria15_flows <- get_flows(
   state = "PR",
   county = "las marias",
   year = 2015
-  )
+)
 
-lasmaria15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+lasmaria15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -674,10 +667,10 @@ laspied15_flows <- get_flows(
   state = "PR",
   county = "las piedras",
   year = 2015
-  )
+)
 
-laspied15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+laspied15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -687,10 +680,10 @@ loiza15_flows <- get_flows(
   state = "PR",
   county = "loiza",
   year = 2015
-  )
+)
 
-loiza15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+loiza15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -700,10 +693,10 @@ luquillo15_flows <- get_flows(
   state = "PR",
   county = "luquillo",
   year = 2015
-  )
+)
 
-luquillo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+luquillo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -713,10 +706,10 @@ manati15_flows <- get_flows(
   state = "PR",
   county = "manati",
   year = 2015
-  )
+)
 
-manati15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+manati15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -726,10 +719,10 @@ maricao15_flows <- get_flows(
   state = "PR",
   county = "maricao",
   year = 2015
-  )
+)
 
-maricao15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+maricao15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -739,10 +732,10 @@ mayaguez15_flows <- get_flows(
   state = "PR",
   county = "mayaguez",
   year = 2015
-  )
+)
 
-mayaguez15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+mayaguez15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -752,10 +745,10 @@ moca15_flows <- get_flows(
   state = "PR",
   county = "moca",
   year = 2015
-  )
+)
 
-moca15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+moca15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -765,10 +758,10 @@ morovis15_flows <- get_flows(
   state = "PR",
   county = "morovis",
   year = 2015
-  )
+)
 
-morovis15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+morovis15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -778,10 +771,10 @@ naguabo15_flows <- get_flows(
   state = "PR",
   county = "naguabo",
   year = 2015
-  )
+)
 
-naguabo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+naguabo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -791,10 +784,10 @@ naranjito15_flows <- get_flows(
   state = "PR",
   county = "naranjito",
   year = 2015
-  )
+)
 
-naranjito15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+naranjito15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -804,10 +797,10 @@ orocovis15_flows <- get_flows(
   state = "PR",
   county = "orocovis",
   year = 2015
-  )
+)
 
-orocovis15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+orocovis15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -817,10 +810,10 @@ patillas15_flows <- get_flows(
   state = "PR",
   county = "patillas",
   year = 2015
-  )
+)
 
-patillas15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+patillas15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -830,10 +823,10 @@ penuela15_flows <- get_flows(
   state = "PR",
   county = "penuelas",
   year = 2015
-  )
+)
 
-penuela15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+penuela15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -843,10 +836,10 @@ ponce15_flows <- get_flows(
   state = "PR",
   county = "ponce",
   year = 2015
-  )
+)
 
-ponce15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+ponce15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -856,10 +849,10 @@ quebra15_flows <- get_flows(
   state = "PR",
   county = "quebradillas",
   year = 2015
-  )
+)
 
-quebra15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+quebra15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -869,10 +862,10 @@ rincon15_flows <- get_flows(
   state = "PR",
   county = "rincon",
   year = 2015
-  )
+)
 
-rincon15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+rincon15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -882,10 +875,10 @@ riog15_flows <- get_flows(
   state = "PR",
   county = "rio grande",
   year = 2015
-  )
+)
 
-riog15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+riog15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -895,10 +888,10 @@ sabana15_flows <- get_flows(
   state = "PR",
   county = "sabana grande",
   year = 2015
-  )
+)
 
-sabana15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+sabana15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -908,10 +901,10 @@ salinas15_flows <- get_flows(
   state = "PR",
   county = "salinas",
   year = 2015
-  )
+)
 
-salinas15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+salinas15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -921,10 +914,10 @@ sangerman15_flows <- get_flows(
   state = "PR",
   county = "san german",
   year = 2015
-  )
+)
 
-sangerman15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+sangerman15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -934,10 +927,10 @@ sanjuan15_flows <- get_flows(
   state = "PR",
   county = "san juan",
   year = 2015
-  )
+)
 
-sanjuan15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+sanjuan15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -947,10 +940,10 @@ sanlorenzo15_flows <- get_flows(
   state = "PR",
   county = "san lorenzo",
   year = 2015
-  )
+)
 
-sanlorenzo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+sanlorenzo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -960,10 +953,10 @@ sansebastian15_flows <- get_flows(
   state = "PR",
   county = "san sebastian",
   year = 2015
-  )
+)
 
-sansebastian15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+sansebastian15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -973,10 +966,10 @@ santai15_flows <- get_flows(
   state = "PR",
   county = "santa isabel",
   year = 2015
-  )
+)
 
-santai15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+santai15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -986,10 +979,10 @@ toaalta15_flows <- get_flows(
   state = "PR",
   county = "toa alta",
   year = 2015
-  )
+)
 
-toaalta15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+toaalta15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -999,10 +992,10 @@ toabaja15_flows <- get_flows(
   state = "PR",
   county = "toa baja",
   year = 2015
-  )
+)
 
-toabaja15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+toabaja15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1012,10 +1005,10 @@ trujillo15_flows <- get_flows(
   state = "PR",
   county = "trujillo alto",
   year = 2015
-  )
+)
 
-trujillo15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+trujillo15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1025,10 +1018,10 @@ utuado15_flows <- get_flows(
   state = "PR",
   county = "utuado",
   year = 2015
-  )
+)
 
-utuado15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+utuado15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1038,10 +1031,10 @@ vegaalta15_flows <- get_flows(
   state = "PR",
   county = "vega alta",
   year = 2015
-  )
+)
 
-vegaalta15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+vegaalta15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1051,10 +1044,10 @@ vegabaja15_flows <- get_flows(
   state = "PR",
   county = "vega baja",
   year = 2015
-  )
+)
 
-vegabaja15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+vegabaja15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1064,10 +1057,10 @@ vieques15_flows <- get_flows(
   state = "PR",
   county = "vieques",
   year = 2015
-  )
+)
 
-vieques15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+vieques15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1077,10 +1070,10 @@ villalba15_flows <- get_flows(
   state = "PR",
   county = "villalba",
   year = 2015
-  )
+)
 
-villalba15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+villalba15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1090,10 +1083,10 @@ yabucoa15_flows <- get_flows(
   state = "PR",
   county = "yabucoa",
   year = 2015
-  )
+)
 
-yabucoa15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+yabucoa15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
@@ -1103,23 +1096,24 @@ yauco15_flows <- get_flows(
   state = "PR",
   county = "yauco",
   year = 2015
-  )
+)
 
-yauco15_flows %>% 
-  filter(!is.na(GEOID2)) %>% 
+yauco15_flows %>%
+  filter(!is.na(GEOID2)) %>%
   head()
 ```
 
-##Is there a way to run all these codes for the years remainding?\*
+## Is there a way to run all these codes for the years remainding?\*
 
-##Import data from NFIP
+## Import data from NFIP
+
 ```{r}
-library("readxl")
 here::here(
   "data/FEMANFIPClaims_PR.xlsx"
-  )
+)
 ```
 
 ```{r}
+# FIXME: Read in FEMANFIPClaims_PR.xlsx
 nfip_data <- ("data/FEMANFIPClaims_PR.xlsx")
 ```
