@@ -2,34 +2,128 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+git commit --no-verify
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+# Puerto Rico Migration Flow 
 
-# puertoricomigrationflow
+This repository contains processes, data, analysis, and summary of Puerto Rico
+Migration Flow to continental U.S.
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of puertoricomigrationflow is to ...
+## Description
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+After natural disasters, it is difficult to track individual movements from one location to another and even harder if the individuals move to a different state or country. For instance, Puerto Ricans have the ability to move from Puerto Rico to the continental U.S. because they are U.S. citizens and are not bound by international restrictions. Puerto Ricans have a unique status that makes it an interesting group to research due to their history, location, and disaster risk. The primary goal of this project is research, compare, analyze, and document migration flows from Puerto Rico to the continental U.S. pre-and-post Hurricanes Irma and Maria. This project uses data from the Census Bureau's Population Estimate Program (PEP) for years 2015-2019.
 
-```{r cars}
-summary(cars)
+## Getting Started
+
+### Dependencies
+
+- OS Monterey Version 12.6.1 
+- RStudio 2022.07.2 build 576
+
+### Installing
+
+- Sign-up for a Census Data API key at (https://api.census.gov/data/key_signup.html)
+- Sign-up for a Mapbox API token at (https://www.mapbox.com)
+
+## Executing project
+
+- Install packages and set-up up library
+
+```{r}
+#| echo: false
+library(tidycensus)
+library(tidyverse)
+library(tigris)
+library(sf)
+library(readr)
+
+options(tigris_use_cache = TRUE)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+- Install Census Data API key
+```{r}
+options(tigris_class = "sf")
+options(tigris_use_cache = TRUE)
+census_api_key("CENSUS API KEY GOES HERE")
+"install = TRUE"
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub.
+- Create a data frame for Puerto Rico using _tigris_ for state _PR_ for 2015, 2016, 2017, 2018, and 2019. Save as an rds file.
+
+```{r}
+pr_counties_flows_2015 <-
+  purrr::map_dfr(
+    pr_counties$COUNTYFP,
+    ~ get_flows(
+      geography = "county",
+      state = "PR",
+      county = .x,
+      year = 2015
+    )
+  )
+
+pr_counties_flows_2015$year <- 2015
+```
+
+- Read rds file, create new variable that totals all individuals that moved from Puerto Rico to the continential U.S. by filtering out the areas that are not the U.S.
+
+```{r}
+pr_movedout_summary <-
+pr_counties_flows_2015_2019 %>%
+  filter(!(FULL2_NAME %in% c("Africa", "Asia", "Central America", 
+  "Caribbean", "Europe", "South America", "Puerto Rico" )), variable == "MOVEDOUT") %>% 
+  group_by(year) %>%
+  summarise(
+    total_movedout = sum(estimate, na.rm = TRUE)
+  )
+pr_movedout_summary
+```
+
+- Use Mapbox API token and load _mapdeck_ to library. 
+- Use _get_flows_ to create a map that displaces the migration from Puerto Rico to the continental U.S.
+
+```{r}
+library(mapdeck)
+
+sanjuan_inflow <-
+  get_flows(
+  geography = "county",
+  state = "PR",
+  county = "San Juan Municipio",
+  geometry = TRUE
+) %>%
+  filter(variable == "MOVEDIN") %>%
+  na.omit() %>%
+  arrange(desc(estimate))
+
+mapboxapi::mb_access_token("ENTER TOKEN HERE", overwrite=TRUE)
+
+sanjuan_inflow %>%
+  slice_max(estimate, n = 30) %>%
+  mutate(weight = estimate / 500) %>%
+  mapdeck(token = mapboxapi::get_mb_access_token("ENTER TOKEN HERE")) %>%
+  add_arc(origin = "centroid2",
+          destination = "centroid1",
+          stroke_width = "weight",
+          update_view = FALSE) 
+```
+
+-
+
+## Authors
+
+Wendy Prudencio
+
+## License
+
+This project is licensed under the [Creative Commons 1.0] License - see the LICENSE.md file for details.
+
+
+## Acknowledgments
+
+Guidance and trouble-shooting
+[Professor Pousson]()
